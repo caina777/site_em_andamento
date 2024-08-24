@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação - {{ curso.nome }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000; /* Preto para o fundo */
+            color: #00ff00; /* Verde estilo Matrix para o texto */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .confirmacao-container {
+            padding: 30px;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.9); /* Fundo semi-transparente */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Sombra verde estilo Matrix */
+            margin: 50px;
+        }
+
+        .confirmacao-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .confirmacao-container .curso-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .confirmacao-container img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); /* Sombra verde na imagem */
+        }
+
+        .confirmacao-container p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .confirmacao-container .descricao {
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .confirmacao-container .btn-home {
+            background-color: #00ff00; /* Verde estilo Matrix */
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .confirmacao-container .btn-home:hover {
+            background-color: #009900; /* Verde escuro no hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmacao-container">
+        <h1>Compra Confirmada!</h1>
+        <div class="curso-info">
+            <img src="{{ url_for('static', filename='images/' + curso.imagem) }}" alt="{{ curso.nome }}">
+            <div class="descricao">
+                <p><strong>Curso:</strong> {{ curso.nome }}</p>
+                <p><strong>O que você vai aprender:</strong></p>
+                <p>{{ curso.descricao }}</p>
+                <p><strong>Preço:</strong> {{ curso.preco }}</p>
+            </div>
+        </div>
+        <p>Obrigado por escolher a CZN - Aprendizado sem limite.</p>
+        <a href="/" class="btn-home">Voltar para a Página Inicial</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento - {{ curso.nome }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000; /* Preto para o fundo */
+            color: #00ff00; /* Verde estilo Matrix para o texto */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow: hidden; /* Evita barras de rolagem devido à animação */
+        }
+
+        .matrix-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Mantém o fundo atrás do conteúdo */
+        }
+
+        .matrix-background canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .pagamento-container {
+            padding: 30px;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.8); /* Fundo semi-transparente para contraste */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Sombra verde estilo Matrix */
+            margin: 50px;
+        }
+
+        .pagamento-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .pagamento-container .curso-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pagamento-container .curso-info img {
+            width: 100%;
+            max-width: 500px; /* Ajuste o tamanho conforme necessário */
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pagamento-container .descricao {
+            background-color: #111; /* Fundo escuro para contraste */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); /* Sombra verde estilo Matrix */
+            margin-bottom: 20px;
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pagamento-container .descricao h2 {
+            font-size: 2em;
+            margin-top: 0;
+        }
+
+        .pagamento-container .descricao p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .btn-finalizar {
+            background-color: #00ff00; /* Verde estilo Matrix */
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-finalizar:hover {
+            background-color: #009900; /* Verde escuro no hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-background">
+        <canvas id="matrixCanvas"></canvas>
+    </div>
+    <div class="pagamento-container">
+        <h1>Curso: {{ curso.nome }}</h1>
+        <div class="curso-info">
+            <img src="{{ url_for('static', filename='images/' + curso.imagem) }}" alt="{{ curso.nome }}">
+            <div class="descricao">
+                <h2>O que você vai aprender:</h2>
+                <p>{{ curso.descricao }}</p>
+                <p><strong>Preço:</strong> {{ curso.preco }}</p>
+            </div>
+            <form action="{{ url_for('confirmacao', curso_id=curso.id) }}" method="post">
+                <button type="submit" class="btn-finalizar">Finalizar Compra</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        // Efeito Matrix
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const charArray = chars.split('');
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }).map(() => 1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; // Efeito de desvanecimento
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff00'; // Cor dos caracteres
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 33);
+    </script>
+</body>
+</html>

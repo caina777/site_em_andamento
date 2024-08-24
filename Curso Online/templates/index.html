@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZN - Aprendizado sem limite</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Cabeçalho com Logo -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png.jpg') }}" alt="Logo">
+                <span class="site-name">CZN - Aprendizado sem limite</span>
+            </a>
+            <!-- Barra de Navegação -->
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="/">Início</a></li>
+                    <li><a href="#cursos">Cursos</a></li>
+                </ul>
+                <!-- Barra de Pesquisa -->
+                <form class="search-form" action="/" method="get">
+                    <input type="text" name="query" placeholder="Buscar cursos...">
+                    <button type="submit" class="btn-search">Buscar</button>
+                </form>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção de Destaques -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Aprenda com os Melhores</h1>
+            <p>Explore nossos cursos e avance na sua carreira!</p>
+        </div>
+    </header>
+
+    <!-- Seção de Cursos -->
+    <section id="cursos" class="cursos">
+        <div class="container">
+            <h2>Nossos Cursos</h2>
+            <div class="cursos-grid">
+                {% for curso in cursos %}
+                    <div class="curso">
+                        <img src="{{ url_for('static', filename='images/' + curso.imagem) }}" alt="{{ curso.nome }}">
+                        <div class="curso-info">
+                            <h3>{{ curso.nome }}</h3>
+                            <p>{{ curso.descricao }}</p>
+                            <p><strong>{{ curso.preco }}</strong></p>
+                            <form action="{{ url_for('pagamento', curso_id=curso.id) }}" method="get">
+                                <button type="submit" class="btn">Comprar</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CZN - Aprendizado sem limite. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+</header>
+<!-- Cabeçalho com Logo -->
+<header class="header">
+    <div class="header-container">
+        <a href="/" class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png.jpg') }}" alt="Logo">
+            <span class="site-name">CZN - Aprendizado sem limite</span>
+        </a>
+     
+    
+    </div>
+</header>
